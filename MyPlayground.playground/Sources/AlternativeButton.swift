@@ -12,8 +12,8 @@ public class AlternativeButton: UIButton{
         
         self.setTitle(buttonTitle, for: .normal)
         self.setTitleColor(.black, for: .normal)
+        self.titleLabel?.font = UIFont(name: "Chalkboard SE", size: 20)
         
-        //self.button.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi*0.2)
         self.frame = frame
     }
     

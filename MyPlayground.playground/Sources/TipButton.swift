@@ -14,8 +14,8 @@ public class TipButton: UIButton {
         
         self.setTitle("?", for: .normal)
         self.setTitleColor(.black, for: .normal)
-        
-        //self.button.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi*0.2)
+        self.titleLabel?.font = UIFont(name: "Chalkboard SE", size: 20)
+
         self.frame = frame
         
         self.content = content

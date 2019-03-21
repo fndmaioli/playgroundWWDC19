@@ -2,24 +2,27 @@ import Foundation
 import UIKit
 import PlaygroundSupport
 
-public class InitialViewController: MyViewController {
+public class InitialViewController: UIViewController {
     
     public override func loadView() {
         let view = UIView()
+        
+        createQuestions()
+        createMessages()
         
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 720, height: 1080))
         imageView.image = UIImage(named: "numbers_background.png")
         view.addSubview(imageView)
         
-        let titleLabel = UILabel(frame: CGRect(x: 210, y: 270, width: 300, height: 60))
+        let titleLabel = UILabel(frame: CGRect(x: 160, y: 260, width: 405, height: 100))
         titleLabel.text = "Playing Numbers"
-        titleLabel.backgroundColor = .red
-        let titleFont = UIFont(name: "title font", size: 100)
+        titleLabel.textColor = UIColor(red: 106/255, green: 126/255, blue: 254.0/255, alpha: 1.0)
+        let titleFont = UIFont(name: "Marker Felt", size: 50)
         titleLabel.font = titleFont
         titleLabel.textAlignment = NSTextAlignment.center
         view.addSubview(titleLabel)
         
-        let multiplicationButton = UIButton(frame: CGRect(x: 235, y: 450, width: 250, height: 80))
+        let multiplicationButton = UIButton(frame: CGRect(x: 235, y: 440, width: 250, height: 80))
         multiplicationButton.setTitle("Multiplication tricks", for: .normal)
         multiplicationButton.layer.cornerRadius = 12
         multiplicationButton.layer.borderWidth = 2
@@ -29,7 +32,7 @@ public class InitialViewController: MyViewController {
         multiplicationButton.addTarget(self, action: #selector(multiplicationButtonClicked(_:)), for: .touchUpInside)
         view.addSubview(multiplicationButton)
         
-        let curiositiesButton = UIButton(frame: CGRect(x: 235, y: 580, width: 250, height: 80))
+        let curiositiesButton = UIButton(frame: CGRect(x: 235, y: 570, width: 250, height: 80))
         curiositiesButton.setTitleColor(.black, for: .normal)
         curiositiesButton.setTitle("Math funny curiosities", for: .normal)
         curiositiesButton.layer.cornerRadius = 12
@@ -48,7 +51,8 @@ public class InitialViewController: MyViewController {
     }
     
     @objc public func multiplicationButtonClicked(_ sender: AnyObject?) {
-        let questionView = MyViewController()
+        let questionView = QuestionViewController()
+//        questionView.question = bla
         self.present(questionView, animated: true, completion: nil)
     }
     
