@@ -45,7 +45,7 @@ public class CuriositiesViewController: UIViewController {
         
         let goBackButton = UIButton(frame: CGRect(x: 15, y: 40, width: 50, height: 50))
         goBackButton.addTarget(self, action: #selector(goBackButtonClicked(_:)), for: .touchUpInside)
-        goBackButton.setImage(UIImage(named: "arrow_back.png"), for: .normal)
+        goBackButton.setImage(UIImage(named: "arrow_left.png"), for: .normal)
         view.addSubview(goBackButton)
         
         self.view = view

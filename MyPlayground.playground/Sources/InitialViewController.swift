@@ -33,7 +33,18 @@ public class InitialViewController: UIViewController {
         multiplicationButton.addTarget(self, action: #selector(multiplicationButtonClicked(_:)), for: .touchUpInside)
         view.addSubview(multiplicationButton)
         
-        let curiositiesButton = UIButton(frame: CGRect(x: 235, y: 570, width: 250, height: 80))
+        let freeModeButton = UIButton(frame: CGRect(x: 235, y: 570, width: 250, height: 80))
+        freeModeButton.setTitle("Free Mode", for: .normal)
+        freeModeButton.titleLabel?.font = UIFont(name: "Chalkboard SE", size: 18)
+        freeModeButton.layer.cornerRadius = 12
+        freeModeButton.layer.borderWidth = 2
+        freeModeButton.layer.borderColor = UIColor(red: 145.0/255, green: 69.0/255, blue: 176.0/255, alpha: 1.0).cgColor
+        freeModeButton.backgroundColor = UIColor(red: 222.0/255, green: 185.0/255, blue: 255.0/255, alpha: 1.0)
+        freeModeButton.setTitleColor(UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0), for: .normal)
+        freeModeButton.addTarget(self, action: #selector(freeModeButtonClicked(_:)), for: .touchUpInside)
+        view.addSubview(freeModeButton)
+        
+        let curiositiesButton = UIButton(frame: CGRect(x: 235, y: 700, width: 250, height: 80))
         curiositiesButton.setTitle("Math funny curiosities", for: .normal)
         curiositiesButton.titleLabel?.font = UIFont(name: "Chalkboard SE", size: 18)
         curiositiesButton.layer.cornerRadius = 12
@@ -50,6 +61,11 @@ public class InitialViewController: UIViewController {
     @objc public func curiositiesButtonClicked(_ sender: AnyObject?) {
         let curiositiesView = CuriositiesViewController()
         self.present(curiositiesView, animated: true, completion: nil)
+    }
+    
+    @objc public func freeModeButtonClicked(_ sender: AnyObject?) {
+        let freeModeView = FreeModeViewController()
+        self.present(freeModeView, animated: true, completion: nil)
     }
     
     @objc public func multiplicationButtonClicked(_ sender: AnyObject?) {

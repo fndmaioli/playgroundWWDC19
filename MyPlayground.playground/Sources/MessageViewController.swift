@@ -38,7 +38,7 @@ public class MessageViewController: UIViewController {
         
         let leaveToHomeButton = UIButton(frame: CGRect(x: 15, y: 40, width: 50, height: 50))
         leaveToHomeButton.addTarget(self, action: #selector(leaveToHomeButtonClicked(_:)), for: .touchUpInside)
-        leaveToHomeButton.setImage(UIImage(named: "homepage_icon.png"), for: .normal)
+        leaveToHomeButton.setImage(UIImage(named: "home_icon.png"), for: .normal)
         view.addSubview(leaveToHomeButton)
         
         view.addSubview(verifyQuestions())

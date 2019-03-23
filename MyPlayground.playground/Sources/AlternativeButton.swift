@@ -11,7 +11,7 @@ public class AlternativeButton: UIButton{
         self.setBackgroundImage(image, for: .normal)
         
         self.setTitle(buttonTitle, for: .normal)
-        self.setTitleColor(.black, for: .normal)
+        self.setTitleColor(UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0), for: .normal)
         self.titleLabel?.font = UIFont(name: "Chalkboard SE", size: 20)
         
         self.frame = frame
