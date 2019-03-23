@@ -15,7 +15,7 @@ public class MessageViewController: UIViewController {
         if questionsArray.isEmpty {
             let congratsLabel = UILabel(frame: CGRect(x: 135, y: 200, width: 450, height: 200))
             congratsLabel.text = "CONGRATULATIONS"
-            congratsLabel.textColor = UIColor(red: 106/255, green: 126/255, blue: 254.0/255, alpha: 1.0)
+            congratsLabel.textColor = UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0)
             congratsLabel.numberOfLines = 0
             congratsLabel.adjustsFontSizeToFitWidth = true
             let congratsFont = UIFont(name: "Marker Felt", size: 50)
@@ -28,7 +28,7 @@ public class MessageViewController: UIViewController {
         
         let titleLabel = UILabel(frame: messageLabelFrame)
         titleLabel.text = messagesArray.remove(at: 0)
-        titleLabel.textColor = .black
+        titleLabel.textColor = UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0)
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = true
         let titleFont = UIFont(name: "Chalkboard SE", size: 30)
@@ -38,7 +38,7 @@ public class MessageViewController: UIViewController {
         
         let leaveToHomeButton = UIButton(frame: CGRect(x: 15, y: 40, width: 50, height: 50))
         leaveToHomeButton.addTarget(self, action: #selector(leaveToHomeButtonClicked(_:)), for: .touchUpInside)
-        leaveToHomeButton.setImage(UIImage(named: "home_icon.png"), for: .normal)
+        leaveToHomeButton.setImage(UIImage(named: "homepage_icon.png"), for: .normal)
         view.addSubview(leaveToHomeButton)
         
         view.addSubview(verifyQuestions())
@@ -51,6 +51,7 @@ public class MessageViewController: UIViewController {
         if questionsArray.isEmpty {
             let doneLabel = UILabel(frame: CGRect(x: 235, y: 630, width: 250, height: 60))
             doneLabel.text = "You successfully answered all questions!!"
+            doneLabel.textColor = UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0)
             doneLabel.numberOfLines = 0
             doneLabel.adjustsFontSizeToFitWidth = true
             let doneFont = UIFont(name: "Marker Felt", size: 30)
@@ -67,7 +68,7 @@ public class MessageViewController: UIViewController {
         nextQuestionButton.layer.borderWidth = 2
         nextQuestionButton.layer.borderColor = UIColor(red: 145.0/255, green: 69.0/255, blue: 176.0/255, alpha: 1.0).cgColor
         nextQuestionButton.backgroundColor = UIColor(red: 222.0/255, green: 185.0/255, blue: 255.0/255, alpha: 1.0)
-        nextQuestionButton.setTitleColor(.black, for: .normal)
+        nextQuestionButton.setTitleColor(UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0), for: .normal)
         nextQuestionButton.addTarget(self, action: #selector(NextQuestionButtonClicked(_:)), for: .touchUpInside)
         
         return nextQuestionButton
@@ -81,7 +82,6 @@ public class MessageViewController: UIViewController {
     
     @objc public func NextQuestionButtonClicked(_ sender: AnyObject?) {
         let questionView = QuestionViewController()
-        //questionView.question = bla
         self.present(questionView, animated: true, completion: nil)
     }
     

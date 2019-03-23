@@ -25,7 +25,7 @@ public class QuestionViewController : UIViewController {
         let content = UILabel()
         content.frame = CGRect(x: 260, y: 50, width: 200, height: 100)
         content.text = question.content
-        content.textColor = UIColor(red: 106.0/255, green: 125.0/255, blue: 254.0/255, alpha: 1.0)
+        content.textColor = UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0)
         content.font = UIFont(name: "Chalkboard SE", size: 35)
         content.textAlignment = NSTextAlignment.center
         view.addSubview(content)
@@ -33,6 +33,7 @@ public class QuestionViewController : UIViewController {
         self.numTips = question.tips.count
         self.numAlternatives = question.alternatives.count
         tipsLabel.text = "Tips left: \(numTips)"
+        tipsLabel.textColor = UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0)
         tipsLabel.frame = CGRect(x: 600, y: 47, width: 100, height: 50)
         tipsLabel.font = UIFont(name: "Chalkboard SE", size: 20)
         view.addSubview(tipsLabel)

@@ -2,17 +2,17 @@ import Foundation
 import UIKit
 import PlaygroundSupport
 
-public class CuriositiesViewController: UIViewController {
+public class KeyboardViewController: UIViewController {
     
     public override func loadView() {
         let view = UIView()
         
         let backgroundImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 720, height: 1080))
-        backgroundImageView.image = UIImage(named: "numbers_background.png")
+        backgroundImageView.image = UIImage(named: "general_background.png")
         view.addSubview(backgroundImageView)
         
         let titleLabel = UILabel(frame: CGRect(x: 210, y: 250, width: 300, height: 150))
-        titleLabel.text = "Choose any curiosity and have fun!!"
+        titleLabel.text = "Digit an equation you want to learn"
         titleLabel.textColor = UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0)
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = true
