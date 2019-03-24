@@ -75,6 +75,8 @@ public class MessageViewController: UIViewController {
     }
     
     @objc public func leaveToHomeButtonClicked(_ sender: AnyObject?) {
+        questionsArray.removeAll()
+        messagesArray.removeAll()
         let viewController = InitialViewController()
         viewController.preferredContentSize = CGSize(width: 720, height: 1080)
         PlaygroundPage.current.liveView = viewController

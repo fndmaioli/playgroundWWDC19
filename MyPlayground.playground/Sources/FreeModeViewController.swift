@@ -4,7 +4,7 @@ import PlaygroundSupport
 
 public class FreeModeViewController: UIViewController {
     
-    public var equationLabel: UILabel = UILabel(frame: CGRect(x: 110, y: 250, width: 500, height: 90))
+    public var equationLabel: UILabel = UILabel(frame: CGRect(x: 110, y: 250, width: 500, height: 70))
     
     public override func loadView() {
         let view = UIView()
@@ -30,23 +30,29 @@ public class FreeModeViewController: UIViewController {
         self.equationLabel.textAlignment = NSTextAlignment.center
         view.addSubview(self.equationLabel)
         
-        view.addSubview(self.createButton(frame: CGRect(x: 235, y: 465, width: 65, height: 65), number: "7"))
-        view.addSubview(self.createButton(frame: CGRect(x: 305, y: 465, width: 65, height: 65), number: "8"))
-        view.addSubview(self.createButton(frame: CGRect(x: 375, y: 465, width: 65, height: 65), number: "9"))
-        view.addSubview(self.createButton(frame: CGRect(x: 235, y: 535, width: 65, height: 65), number: "4"))
-        view.addSubview(self.createButton(frame: CGRect(x: 305, y: 535, width: 65, height: 65), number: "5"))
-        view.addSubview(self.createButton(frame: CGRect(x: 375, y: 535, width: 65, height: 65), number: "6"))
-        view.addSubview(self.createButton(frame: CGRect(x: 235, y: 605, width: 65, height: 65), number: "1"))
-        view.addSubview(self.createButton(frame: CGRect(x: 305, y: 605, width: 65, height: 65), number: "2"))
-        view.addSubview(self.createButton(frame: CGRect(x: 375, y: 605, width: 65, height: 65), number: "3"))
-        view.addSubview(self.createButton(frame: CGRect(x: 445, y: 465, width: 65, height: 65), number: "/"))
-        view.addSubview(self.createButton(frame: CGRect(x: 445, y: 535, width: 65, height: 65), number: "x"))
-        view.addSubview(self.createButton(frame: CGRect(x: 445, y: 605, width: 65, height: 65), number: "-"))
-        view.addSubview(self.createButton(frame: CGRect(x: 445, y: 675, width: 65, height: 65), number: "+"))
-        view.addSubview(self.createButton(frame: CGRect(x: 235, y: 675, width: 135, height: 65), number: "0"))
-        view.addSubview(self.createButton(frame: CGRect(x: 375, y: 675, width: 65, height: 65), number: "X"))
+        let equationBox = UIView(frame: CGRect(x: 105, y: 250, width: 510, height: 70))
+        equationBox.layer.cornerRadius = 12
+        equationBox.layer.borderWidth = 2
+        equationBox.layer.borderColor = UIColor(red: 145.0/255, green: 69.0/255, blue: 176.0/255, alpha: 1.0).cgColor
+        view.addSubview(equationBox)
         
-        let confirmQuestionButton = UIButton(frame: CGRect(x: 228, y: 800, width: 275, height: 80))
+        view.addSubview(self.createButton(frame: CGRect(x: 228, y: 395, width: 65, height: 65), number: "7"))
+        view.addSubview(self.createButton(frame: CGRect(x: 298, y: 395, width: 65, height: 65), number: "8"))
+        view.addSubview(self.createButton(frame: CGRect(x: 368, y: 395, width: 65, height: 65), number: "9"))
+        view.addSubview(self.createButton(frame: CGRect(x: 438, y: 395, width: 65, height: 65), number: "/"))
+        view.addSubview(self.createButton(frame: CGRect(x: 228, y: 465, width: 65, height: 65), number: "4"))
+        view.addSubview(self.createButton(frame: CGRect(x: 298, y: 465, width: 65, height: 65), number: "5"))
+        view.addSubview(self.createButton(frame: CGRect(x: 368, y: 465, width: 65, height: 65), number: "6"))
+        view.addSubview(self.createButton(frame: CGRect(x: 438, y: 465, width: 65, height: 65), number: "x"))
+        view.addSubview(self.createButton(frame: CGRect(x: 228, y: 535, width: 65, height: 65), number: "1"))
+        view.addSubview(self.createButton(frame: CGRect(x: 298, y: 535, width: 65, height: 65), number: "2"))
+        view.addSubview(self.createButton(frame: CGRect(x: 368, y: 535, width: 65, height: 65), number: "3"))
+        view.addSubview(self.createButton(frame: CGRect(x: 438, y: 535, width: 65, height: 65), number: "-"))
+        view.addSubview(self.createButton(frame: CGRect(x: 228, y: 605, width: 135, height: 65), number: "0"))
+        view.addSubview(self.createButton(frame: CGRect(x: 368, y: 605, width: 65, height: 65), number: "del"))
+        view.addSubview(self.createButton(frame: CGRect(x: 438, y: 605, width: 65, height: 65), number: "+"))
+        
+        let confirmQuestionButton = UIButton(frame: CGRect(x: 228, y: 730, width: 275, height: 80))
         confirmQuestionButton.setTitle("Go to Question", for: .normal)
         confirmQuestionButton.titleLabel?.font = UIFont(name: "Chalkboard SE", size: 20)
         confirmQuestionButton.layer.cornerRadius = 12
@@ -87,32 +93,38 @@ public class FreeModeViewController: UIViewController {
     
     @objc public func confirmQuestionButtonClicked(_ sender: AnyObject?) {
         if let equation = self.equationLabel.text as? String {
-            questionsArray.insert(Question.init(content: equation), at: 0)
-            let questionView = QuestionViewController()
-            self.present(questionView, animated: true, completion: nil)
+            if equation.count > 0{
+                messagesArray.insert("You are now more intelligent than when you started just moments ago, we are really happy to see your growth", at: 0)
+                questionsArray.insert(Question.init(content: equation), at: 0)
+                let questionView = QuestionViewController()
+                self.present(questionView, animated: true, completion: nil)
+            }
         }
     }
     
     @objc public func KeyboardButtonClicked(_ sender: AnyObject?) {
         if let button = sender as? UIButton, let equation = self.equationLabel.text as? String, var digit = button.titleLabel?.text as? String{
-            var isValidDigit = true
-            if digit == "X" {
-                isValidDigit = false
-                if equation != "" {
+            if digit == "del" {
+                if equation.count > 0 {
                     self.equationLabel.text?.removeLast()
                 }
+                return
             }
-            else if digit == "x" || digit == "/" || digit == "+" || digit == "-" {
-                if let last = equation.last as? Character {
-                    let lastDigit = String(last)
-                    if lastDigit == "x" || lastDigit == "/" || lastDigit == "+" || lastDigit == "-" || equation.isEmpty {
-                        isValidDigit = false
+            if equation.count < 20 {
+                if digit == "x" || digit == "/" || digit == "+" || digit == "-" {
+                    if equation.count == 0 {
+                        return
+                    }
+                    else if let last = equation.last as? Character {
+                        let lastDigit = String(last)
+                        if lastDigit == "x" || lastDigit == "/" || lastDigit == "+" || lastDigit == "-" {
+                            return
+                        }
                     }
                 }
+                self.equationLabel.text = equation + digit
             }
-            if isValidDigit { self.equationLabel.text = equation + digit }
         }
-        
     }
     
     

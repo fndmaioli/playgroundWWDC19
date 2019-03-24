@@ -1,5 +1,5 @@
 import Foundation
-
+import GameplayKit
 
 public func getMultDivResult(content: String) -> String{
     var equation = content.lowercased()
@@ -117,34 +117,52 @@ public func calculateSimpleResult(number1: String, number2: String, operation: S
     return "No result found"
 }
 
-public func getAlternatives(rightAnswer: String) -> [String]{
-    var answersArray = [String]()
-    answersArray.append(rightAnswer)
+public func getNumbers(equation: String) -> [String] {
+    var numbersArray = [String]()
+    var number = ""
+    for (i,c) in equation.enumerated() {
+        let char = String(c)
+        if char != " " {
+            if char >= "0" && char <= "9" {
+                number += char
+            }
+            else {
+                numbersArray.append(number)
+                number = ""
+            }
+        }
+    }
+    numbersArray.append(number)
+    return numbersArray
+}
+
+public func getAlternatives(equation: String, rightAnswer: String) -> [String]{
+    
+    var alternativesArray = [String]()
+    alternativesArray.append(rightAnswer)
+    var numbersArray = getNumbers(equation: equation)
+    var alternative: Int
+    
     if let correctNum = Int(rightAnswer) {
         
-        if correctNum > 1000 {
-            var alternative = Int.random(in: correctNum-200...correctNum+300)
-            answersArray.append(String(alternative))
-            alternative = Int.random(in: correctNum-200...correctNum+100)
-            answersArray.append(String(alternative))
-            alternative = Int.random(in: correctNum-100...correctNum+50)
-            answersArray.append(String(alternative))
-            alternative = Int.random(in: correctNum-20...correctNum+30)
-            answersArray.append(String(alternative))
+        let distribution = GKShuffledDistribution(lowestValue: 0, highestValue: numbersArray.count-1)
+        var randomMultiplier = GKShuffledDistribution(lowestValue: 1, highestValue: 5)
+        var randomOperation = Int.random(in: 1...2)
+        for _ in 0..<5{
             
+            if let number = numbersArray[distribution.nextInt()] as? String, let num = Int(number){
+                if randomOperation == 1 {
+                    alternative = correctNum + (num * randomMultiplier.nextInt())
+                } else {
+                    alternative = correctNum - (num * randomMultiplier.nextInt())
+                }
+                alternativesArray.append(String(alternative))
+                randomOperation = Int.random(in: 1...2)
+            }
         }
-        //    else if correctNum > 100 {
-        //
-        //    } else {
-        //
-        //    }
-        
-        
-        
-        return answersArray
+        return alternativesArray
     }
-    
-    return answersArray
+    return alternativesArray
 }
 
 

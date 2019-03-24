@@ -7,9 +7,6 @@ public class InitialViewController: UIViewController {
     public override func loadView() {
         let view = UIView()
         
-        createQuestions()
-        createMessages()
-        
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 720, height: 1080))
         imageView.image = UIImage(named: "numbers_background.png")
         view.addSubview(imageView)
@@ -69,6 +66,8 @@ public class InitialViewController: UIViewController {
     }
     
     @objc public func multiplicationButtonClicked(_ sender: AnyObject?) {
+        createQuestions()
+        createMessages()
         let questionView = QuestionViewController()
         self.present(questionView, animated: true, completion: nil)
     }

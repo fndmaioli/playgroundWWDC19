@@ -5,14 +5,12 @@ import PlaygroundSupport
 public class QuestionViewController : UIViewController {
     
     public var frames: [CGRect] = [CGRect]()
-    public var tipLabel: UILabel = UILabel(frame: CGRect(x: 160, y: 135, width: 400, height: 75))
+    public var tipLabel: UILabel = UILabel(frame: CGRect(x: 175, y: 200, width: 370, height: 75))
     public var question: Question?
-    public var numAlternatives: Int = 0
+    public var numAlternatives: Int = 6
     public var tips: [String] = [String]()
-    
-    public var currentTipButton: TipButton?
-    public var tipsLabel: UILabel = UILabel()
-    public var numTips: Int = 0
+    public var indexTips: Int = 0
+    public var lastTipButton: UIButton = UIButton(frame: CGRect(x: 10, y: 200, width: 150, height: 75))
     
     public override func loadView() {
         let view = UIView()
@@ -26,40 +24,35 @@ public class QuestionViewController : UIViewController {
         self.question = question
         self.frames = createRandomFrames()
         let content = UILabel()
-        content.frame = CGRect(x: 160, y: 50, width: 400, height: 75)
+        content.frame = CGRect(x: 160, y: 90, width: 400, height: 75)
         content.text = question.content
         content.textColor = UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0)
-        content.font = UIFont(name: "Chalkboard SE", size: 35)
+        content.font = UIFont(name: "Chalkboard SE", size: 42)
         content.textAlignment = NSTextAlignment.center
         view.addSubview(content)
         
-//        self.numTips = question.tips.count
-//        self.numAlternatives = question.alternatives.count
-//        tipsLabel.text = "Tips left: \(numTips)"
-//        tipsLabel.textColor = UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0)
-//        tipsLabel.frame = CGRect(x: 600, y: 47, width: 100, height: 50)
-//        tipsLabel.font = UIFont(name: "Chalkboard SE", size: 20)
-//        view.addSubview(tipsLabel)
         self.tipLabel.text = ""
         self.tipLabel.textColor = UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0)
-        tipLabel.font = UIFont(name: "Chalkboard SE", size: 25)
-        tipLabel.textAlignment = NSTextAlignment.center
-        view.addSubview(tipLabel)
+        self.tipLabel.font = UIFont(name: "Chalkboard SE", size: 30)
+        self.tipLabel.textAlignment = NSTextAlignment.center
+        view.addSubview(self.tipLabel)
         
-        let lastTipButton = UIButton(frame: CGRect(x: 20, y: 150, width: 100, height: 50))
-        lastTipButton.setTitle("Last tip", for: .normal)
-        lastTipButton.titleLabel?.font = UIFont(name: "Chalkboard SE", size: 18)
-        lastTipButton.layer.cornerRadius = 12
-        lastTipButton.layer.borderWidth = 2
-        lastTipButton.layer.borderColor = UIColor(red: 145.0/255, green: 69.0/255, blue: 176.0/255, alpha: 1.0).cgColor
-        lastTipButton.backgroundColor = UIColor(red: 222.0/255, green: 185.0/255, blue: 255.0/255, alpha: 1.0)
-        lastTipButton.setTitleColor(UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0), for: .normal)
-//        lastTipButton.addTarget(self, action: #selector(multiplicationButtonClicked(_:)), for: .touchUpInside)
-        view.addSubview(lastTipButton)
+        self.lastTipButton.backgroundColor = .red
+        self.lastTipButton.setTitle("Last tip", for: .normal)
+        self.lastTipButton.titleLabel?.font = UIFont(name: "Chalkboard SE", size: 22)
+        self.lastTipButton.layer.cornerRadius = 12
+        self.lastTipButton.layer.borderWidth = 2
+        self.lastTipButton.layer.borderColor = UIColor(red: 145.0/255, green: 69.0/255, blue: 176.0/255, alpha: 1.0).cgColor
+        self.lastTipButton.backgroundColor = UIColor(red: 222.0/255, green: 185.0/255, blue: 255.0/255, alpha: 1.0)
+        self.lastTipButton.setTitleColor(UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0), for: .normal)
+        self.lastTipButton.addTarget(self, action: #selector(lastTipButtonClicked(_:)), for: .touchUpInside)
+        self.lastTipButton.isHidden = true
+        view.addSubview(self.lastTipButton)
         
-        let nextTipButton = UIButton(frame: CGRect(x: 600, y: 150, width: 100, height: 50))
+        let nextTipButton = UIButton(frame: CGRect(x: 560, y: 200, width: 150, height: 75))
+        nextTipButton.backgroundColor = .red
         nextTipButton.setTitle("Get a tip", for: .normal)
-        nextTipButton.titleLabel?.font = UIFont(name: "Chalkboard SE", size: 18)
+        nextTipButton.titleLabel?.font = UIFont(name: "Chalkboard SE", size: 22)
         nextTipButton.layer.cornerRadius = 12
         nextTipButton.layer.borderWidth = 2
         nextTipButton.layer.borderColor = UIColor(red: 145.0/255, green: 69.0/255, blue: 176.0/255, alpha: 1.0).cgColor
@@ -74,24 +67,26 @@ public class QuestionViewController : UIViewController {
         view.addSubview(leaveToHomeButton)
         
         var buttonAlternative: AlternativeButton
-//        print(question.alternatives)
         for alternative in question.alternatives {
             buttonAlternative = AlternativeButton.init(buttonTitle: alternative, frame: self.getFrame())
             buttonAlternative.addTarget(self, action: #selector(buttonAlternativeClicked(_:)), for: .touchUpInside)
             view.addSubview(buttonAlternative)
         }
-        
-//        let tip = question.tips.remove(at: 0)
-//        let buttonTip = TipButton.init(content: tip, frame: self.getFrame())
-//        buttonTip.addTarget(self, action: #selector(buttonTipClicked(_:)), for: .touchUpInside)
-//        view.addSubview(buttonTip)
-//        self.currentTipButton = buttonTip
-        
+        self.tips.append("")
         self.view = view
     }
     
     @objc public func lastTipButtonClicked(_ sender: AnyObject?) {
-        
+        if let tipText = self.tipLabel.text as? String {
+            self.tipLabel.text = self.tips[self.indexTips]
+            
+            if self.tipLabel.text == "" {
+                self.lastTipButton.isHidden = true
+            }
+            else {
+                self.indexTips -= 1
+            }
+        }
     }
     
     @objc public func nextTipButtonClicked(_ sender: AnyObject?) {
@@ -101,11 +96,18 @@ public class QuestionViewController : UIViewController {
                 let tip = createTip(content: equationText)
                 self.tips.append(tip)
                 self.tipLabel.text = tip
+                self.lastTipButton.isHidden = false
             }
-            else {
+            else if tipText == self.tips[self.tips.count-1]{
                 let tip = createTip(content: tipText)
-                self.tips.append(tip)
-                self.tipLabel.text = tip
+                if tip != tipText {
+                    self.tips.append(tip)
+                    self.tipLabel.text = tip
+                    self.indexTips += 1
+                }
+            } else {
+                self.tipLabel.text = self.tips[indexTips+2]
+                self.indexTips += 1
             }
         }
     }
@@ -114,9 +116,11 @@ public class QuestionViewController : UIViewController {
         
         if let button = sender as? AlternativeButton, let text = button.titleLabel?.text, let myquestion = self.question {
             
-            self.numAlternatives -= 1
             let label = UILabel(frame: button.frame)
+            label.text = ""
             label.numberOfLines = 0
+            label.textColor = UIColor(red: 41.0/255, green: 8.0/255, blue: 149.0/255, alpha: 1.0)
+            label.font = UIFont(name: "Chalkboard SE", size: 20)
             label.adjustsFontSizeToFitWidth = true
             label.textAlignment = NSTextAlignment.center
             label.alpha = 0.0
@@ -127,19 +131,16 @@ public class QuestionViewController : UIViewController {
                 self.present(messageView, animated: true, completion: nil)
             }
             else {
-                if numAlternatives - 1 == numTips{
-                    if self.currentTipButton != nil {
-                        self.buttonTipClicked(self.currentTipButton)
-                        label.text = "Try using this tip!"
-                    } else {
-                        label.text = "Only one alternative left now!"
-                    }
+                switch (self.numAlternatives) {
+                case 6: label.text = "Don't mind"
+                case 5: label.text = "Keep thinking!"
+                case 4: label.text = "Keep trying"
+                case 3: label.text = "You got this!"
+                case 2: label.text = "Only one left now"
+                default: label.text = "Don't stop"
                 }
-                else if numAlternatives == myquestion.alternatives.count-1 || self.numTips == 0{
-                    label.text = "Don't mind, keep thinking!"
-                } else if self.numTips > 0 {
-                    label.text = "Don't be afraid of using the Tips, we're all here to learn.=)"
-                }
+                self.numAlternatives -= 1
+                
                 self.fadeAnimation(sender: button, label: label, buttonTip: nil)
             }
             
@@ -147,37 +148,9 @@ public class QuestionViewController : UIViewController {
         
     }
     
-    @objc public func buttonTipClicked(_ sender: AnyObject?) {
-//        if let button = sender as? TipButton, let question = self.question {
-//
-//            self.numTips -= 1
-//            self.tipsLabel.text = "Tips left: \(self.numTips)"
-//
-//            let label = UILabel(frame: button.frame)
-//            label.text = button.content
-//            label.numberOfLines = 0
-//            label.adjustsFontSizeToFitWidth = true
-//            label.textAlignment = NSTextAlignment.center
-//            label.alpha = 0.0
-//            self.view.addSubview(label)
-//
-//            if self.numTips > 0 {
-//                let tip = question.tips.remove(at: 0)
-//                let buttonTip = TipButton.init(content: tip, frame: self.getFrame())
-//                buttonTip.addTarget(self, action: #selector(buttonTipClicked(_:)), for: .touchUpInside)
-//                buttonTip.alpha = 0.0
-//                self.view.addSubview(buttonTip)
-//                self.currentTipButton = buttonTip
-//                self.fadeAnimation(sender: button, label: label, buttonTip: buttonTip)
-//            }
-//            else {
-//                self.currentTipButton = nil
-//                self.fadeAnimation(sender: button, label: label, buttonTip: nil)
-//            }
-//        }
-    }
-    
     @objc public func leaveToHomeButtonClicked(_ sender: AnyObject?) {
+        questionsArray.removeAll()
+        messagesArray.removeAll()
         let viewController = InitialViewController()
         viewController.preferredContentSize = CGSize(width: 720, height: 1080)
         PlaygroundPage.current.liveView = viewController
